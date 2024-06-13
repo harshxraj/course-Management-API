@@ -1,38 +1,57 @@
 const prisma = require("../services/prisma");
 
-const getProgress = async (req, res) => {
+const getUserProgress = async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+
   try {
-    const progress = await prisma.progress.findMany({
-      where: { userId: parseInt(req.params.id, 10) },
-      include: { course: true },
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { Progress: true },
     });
-    return res.status(200).json(progress);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    return res.status(200).json(user.Progress);
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
 const updateProgress = async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
   const { courseId, progress } = req.body;
+
   try {
-    const updatedProgress = await prisma.progress.upsert({
-      where: {
-        userId_courseId: {
-          userId: parseInt(req.params.id, 10),
-          courseId: parseInt(courseId, 10),
-        },
-      },
-      update: { progress },
-      create: {
-        progress,
-        userId: parseInt(req.params.id, 10),
-        courseId: parseInt(courseId, 10),
-      },
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
     });
-    res.json(updatedProgress);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    const course = await prisma.course.findUnique({
+      where: { id: courseId },
+    });
+
+    if (!course) {
+      return res.status(404).json({ error: "Course not found!" });
+    }
+
+    // Updating or creating progress for the user and course
+    const updatedProgress = await prisma.progress.upsert({
+      where: { userId_courseId: { userId, courseId } },
+      update: { progress },
+      create: { progress, userId, courseId },
+      include: { course: true },
+    });
+
+    return res.status(200).json({ msg: "Progress updated successfully", progress: updatedProgress });
   } catch (error) {
-    res.sendStatus(404);
+    return res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = { getProgress, updateProgress };
+module.exports = { getUserProgress, updateProgress };
