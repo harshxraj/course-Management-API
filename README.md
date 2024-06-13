@@ -9,6 +9,9 @@
 
 This repository contains a RESTful API for managing courses within a Learning Management System (LMS). It provides endpoints for user authentication, course management (CRUD operations), and progress tracking using Prisma ORM for database operations.
 
+## API Documentation
+Postam API documentation is available at [`Link`](https://documenter.getpostman.com/view/31503957/2sA3XPBh9H).
+
 ## Features
 
 - User Authentication:
@@ -76,10 +79,6 @@ To run this project locally, follow these steps:
    ```
 
    The server will start running on `http://localhost:3000`.
-
-5. **API Documentation:**
-
-   - Postam API documentation is available at [`Link`](https://documenter.getpostman.com/view/31503957/2sA3XPBh9H).
 
 ## API Endpoints
 
