@@ -1,8 +1,8 @@
 # Course Management API
 
-![Node.js](https://img.shields.io/badge/Node.js-v14.17-green)
-![Express.js](https://img.shields.io/badge/Express.js-v4.17-blue)
-![Prisma](https://img.shields.io/badge/Prisma-v2.28-orange)
+![Node.js](https://img.shields.io/badge/Node.js-v21.6.1-green)
+![Express.js](https://img.shields.io/badge/Express.js-v4.19.2-blue)
+![Prisma](https://img.shields.io/badge/Prisma-v5.15.0-orange)
 ![License](https://img.shields.io/badge/License-MIT-red)
 
 ## Overview
