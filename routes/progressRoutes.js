@@ -6,6 +6,6 @@ const authorizeRole = require("../middlewares/roleMiddleware");
 const router = express.Router();
 
 router.get("/users/:id/progress", authenticateToken, authorizeRole(["STUDENT", "TEACHER"]), getUserProgress);
-router.post("/users/:id/progress", authenticateToken, authorizeRole(["TEACHER"]), updateProgress);
+router.post("/users/:id/progress", authenticateToken, authorizeRole(["STUDENT", "TEACHER"]), updateProgress);
 
 module.exports = router;
